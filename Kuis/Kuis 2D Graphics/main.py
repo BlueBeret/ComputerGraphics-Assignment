@@ -17,7 +17,7 @@ turtle.tracer(0,0)
 sc = turtle.Screen()
 sc.bgcolor('black')
 sc.screensize(1000,1000)
-sc.setworldcoordinates(0,-1,720,1)
+sc.setworldcoordinates(-1000,-1000,1000,1000)
 # membuat object baru 
 pen = turtle.Turtle()
 pen.speed(0) 
@@ -40,25 +40,29 @@ def titik(x,y,warna):
 
 # fungsi untuk menggambar sinus
 def buatSinus(color=(255,0,0), rotasi=0, n = 10000, sc=sc):
-    if rotasi == 0 or rotasi == 180:
-        sc.setworldcoordinates(0,-1,720,1)
-    elif rotasi == 90 or rotasi == 270:
-        sc.setworldcoordinates(-1,0,1,720)
-
-    
     for i in range(n):
         i = 720*i/n
 
         # x dan y asli
         x = i
         y = sin(i/180*pi)
-        if rotasi==0:
-            titik(x, y, color)
+        if rotasi==0 or rotasi == 180:
+            # titik ditransformasikan sesuai koordinat pada layar 
+            # yaitu xmin = -1000 ymin = -1000 xmax = 1000 ymax = 1000
+            xv = (x/720)*1000
+            yv = (y)*200
+            titik(xv,yv , color)
         else:
             # x dan y rotasi
             x_rotasi = x * cos(rotasi * pi/180) - y * sin(rotasi * pi/180)
             y_rotasi = x * sin(rotasi * pi/180) + y * cos(rotasi * pi/180)
-            titik(x_rotasi, y_rotasi, color)
+
+            # titik ditransformasikan sesuai koordinat pada layar 
+            # yaitu xmin = -1000 ymin = -1000 xmax = 1000 ymax = 1000
+            xv = (x_rotasi)*200
+            yv = (y_rotasi/720)*1000
+
+            titik(xv, yv, color)
 
 
 
@@ -68,6 +72,7 @@ def buatSinus(color=(255,0,0), rotasi=0, n = 10000, sc=sc):
 if __name__ == "__main__":
     # buat grafik sinus awal berwarna merah
     buatSinus()
-    input()
     buatSinus(color=(0,255,0), rotasi=90)
-    input()
+    buatSinus(color=(0,0,255), rotasi=180)
+    buatSinus(color=(255,255,0), rotasi=270)
+    sc.mainloop()
