@@ -1,7 +1,4 @@
-from curses.ascii import STX
 from math import sin, cos, pi
-import random
-from tkinter import XView
 # import library turtle, bisa diintall dengan command "pip install PythonTurtle"
 import turtle 
 
@@ -26,12 +23,6 @@ pen.hideturtle()
 pen.penup()
 
 
-
-
-# fungsi untuk membuat warna random
-def getRandomColor():
-    return (random.randint(0,255), random.randint(0,255), random.randint(0,255))
-
 # fungsi untuk menggambar titik
 def titik(x,y,warna):
     pen.goto(x,y)
@@ -49,8 +40,14 @@ def buatSinus(color=(255,0,0), rotasi=0, n = 10000, sc=sc):
         if rotasi==0 or rotasi == 180:
             # titik ditransformasikan sesuai koordinat pada layar 
             # yaitu xmin = -1000 ymin = -1000 xmax = 1000 ymax = 1000
-            xv = (x/720)*1000
-            yv = (y)*200
+
+            # x dan y rotasi
+            x_rotasi = x * cos(rotasi * pi/180) - y * sin(rotasi * pi/180)
+            y_rotasi = x * sin(rotasi * pi/180) + y * cos(rotasi * pi/180)
+
+            xv = (x_rotasi/720)*1000
+            yv = (y_rotasi)*200
+            
             titik(xv,yv , color)
         else:
             # x dan y rotasi
