@@ -2,3 +2,4 @@
 *.mkv
 *.zip
 venv/
+__pycache__/
